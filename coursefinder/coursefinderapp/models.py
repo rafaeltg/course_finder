@@ -1,20 +1,21 @@
 from django.db import models
 
 
-class Location(models.Model):
+COUNTRY_CHOICES = (
+    ('XF', 'England'),
+    ('XG', 'Northern Ireland'),
+    ('XH', 'Scotland'),
+    ('XI', 'Wales'),
+    ('XK', 'United Kingdom'),
+)
 
-    COUNTRIES = (
-        ('XF', 'England'),
-        ('XG', 'Northern Ireland'),
-        ('XH', 'Scotland'),
-        ('XI', 'Wales'),
-        ('XK', 'United Kingdom'),
-    )
+
+class Location(models.Model):
 
     locid = models.CharField(max_length=2)
     ukprn = models.CharField(max_length=8)
     name = models.CharField(max_length=100)
-    country = models.CharField(max_length=2, choices=COUNTRIES, default='XK')
+    country = models.CharField(max_length=2, choices=COUNTRY_CHOICES, default='XK')
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
 
@@ -34,13 +35,13 @@ class Job(models.Model):
 
 class Course(models.Model):
 
-    MODES = (
+    MODE_CHOICES = (
         ('1', 'Full-time'),
         ('2', 'Part-time'),
         ('3', 'Both'),
     )
 
-    DISTANCES = (
+    DISTANCE_CHOICES = (
         ('0', 'Course is available other than by distance learning'),
         ('1', 'Course is only available through distance learning'),
         ('2', 'Course is optionally available through distance learning'),
@@ -51,8 +52,8 @@ class Course(models.Model):
     kiscourseid = models.CharField(max_length=25)
     title = models.CharField(max_length=100)
     url = models.URLField(max_length=100)
-    mode = models.CharField(max_length=1, choices=MODES, default='1')
-    distance = models.CharField(max_length=1, choices=DISTANCES, default='0')
+    mode = models.CharField(max_length=1, choices=MODE_CHOICES, default='1')
+    distance = models.CharField(max_length=1, choices=DISTANCE_CHOICES, default='0')
     aim = models.CharField(max_length=10)
 
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)

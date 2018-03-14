@@ -1,0 +1,14 @@
+
+<div class="course">
+    <h3>{{ course.title }}</h3>
+
+    <table style="width:90%; table-layout: fixed;">
+        <tr>
+            <td style="width: 30%;">{{ course.aim }}</td>
+            <td style="width: 70%;">{{ course.location.name }}, {{ course.location.get_country_display }}</td>
+        </tr>
+        <tr>
+            <td><a href="{{ course.url }}">Go to page</a></td>
+        </tr>
+    </table>
+</div>

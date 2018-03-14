@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Course Finder{% endblock %}</title>
+</head>
+
+<style>
+
+#wrapper {
+}
+
+#sidebar {
+ display: inline-block;
+ float: left;
+ box-sizing: border-box;
+ border-style: solid;
+ border-width: 1px;
+ margin-left: 10px;
+ margin-right: 10px;
+ padding: 1em 1em 1em 1em;
+}
+
+#content {
+ overflow: auto;
+}
+
+#courseList {
+ width: 75%;
+ padding-left: 2em;
+}
+
+.course {
+ box-sizing: border-box;
+ border-style: solid;
+ border-width: 1px;
+ padding-bottom: 1em;
+ padding-left: 1em;
+ margin-bottom: 1em;
+}
+
+</style>
+
+
+<body>
+
+<div id="wrapper">
+    <div id="sidebar">
+        {% block sidebar %}
+            {% include "coursefinderapp/filter_form.html" %}
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}
+            {% include "coursefinderapp/course_list.html" %}
+        {% endblock %}
+    </div>
+</div>
+
+
+</body>
+</html>

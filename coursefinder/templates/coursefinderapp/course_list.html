@@ -1,0 +1,21 @@
+
+<div id="courseList">
+
+    <h1>Course List:</h1>
+
+    {% if courses %}
+
+    <ul style="list-style-type: none; padding-left: 0;">
+        {% for course in courses %}
+            <li>
+                {% include "coursefinderapp/course.html" %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% else %}
+
+    <h3>No course to show</h3>
+
+    {% endif %}
+</div>
