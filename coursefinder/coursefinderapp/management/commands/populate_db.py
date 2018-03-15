@@ -7,8 +7,8 @@ from coursefinderapp.models import Location, Course, Job
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        #self.load_locations()
-        #self.load_courses()
+        self.load_locations()
+        self.load_courses()
         self.load_jobs()
 
     def load_locations(self):
@@ -43,7 +43,7 @@ class Command(BaseCommand):
     def load_courses(self):
         """
         Load courses data from KISCOURSE.csv
-        Normalize AIMCODE to AIMLABEL using data from KISAIM.csv
+        Replace AIMCODE by AIMLABEL using data from KISAIM.csv
         """
 
         print('>> Loading Courses...')
@@ -58,10 +58,12 @@ class Command(BaseCommand):
             reader = csv.reader(f, skipinitialspace=True)
             aim_label = dict(reader)
 
-        course_locs = self.load_course_location()
+        course_locs = self.load_course_locations()
 
         def handler(line):
             """
+            Translate each line of the csv in a Course object and associate with the
+            its respective location.
             :param line: csv line
             :return: Course object
             """
@@ -70,7 +72,7 @@ class Command(BaseCommand):
                 pubukprn=line[0],
                 ukprn=line[1],
                 kiscourseid=line[14],
-                title=line[27],
+                title=line[27].replace('"', ""),
                 url=line[4],
                 distance=line[6],
                 mode=line[15],
@@ -87,7 +89,10 @@ class Command(BaseCommand):
         courses = self._read_csv('/coursefinderapp/data/KISCOURSE.csv', handler=handler)
         Course.objects.bulk_create(courses)
 
-    def load_course_location(self):
+    def load_course_locations(self):
+        """
+        Load location data from COURSELOCATION.csv
+        """
 
         def handler(line):
             return ((line[0], line[1], line[2], line[3]), line[4]) if len(line[4]) > 0 else None
@@ -97,6 +102,7 @@ class Command(BaseCommand):
 
     def load_jobs(self):
         """
+        Load jobs data from JOBLIST.csv and associate with courses
         :return:
         """
 
@@ -145,7 +151,7 @@ class Command(BaseCommand):
 
         with open(os.getcwd() + file) as f:
             reader = csv.reader(f)
-            next(reader) # skip header
+            next(reader)  # skip header
 
             for l in reader:
                 obj = handler(l)

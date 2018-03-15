@@ -6,7 +6,6 @@ COUNTRY_CHOICES = (
     ('XG', 'Northern Ireland'),
     ('XH', 'Scotland'),
     ('XI', 'Wales'),
-    ('XK', 'United Kingdom'),
 )
 
 
@@ -65,6 +64,3 @@ class Course(models.Model):
 
     class Meta:
         unique_together = ('pubukprn', 'ukprn', 'kiscourseid', 'mode')
-
-
-

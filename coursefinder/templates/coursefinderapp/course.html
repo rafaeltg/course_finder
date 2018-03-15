@@ -8,6 +8,10 @@
             <td style="width: 70%;">{{ course.location.name }}, {{ course.location.get_country_display }}</td>
         </tr>
         <tr>
+            <td style="width: 30%;">Mode: {{ course.get_mode_display }}</td>
+            <td style="width: 70%;">{{ course.get_distance_display }}</td>
+        </tr>
+        <tr>
             <td><a href="{{ course.url }}">Go to page</a></td>
         </tr>
     </table>
